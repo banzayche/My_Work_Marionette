@@ -19,7 +19,7 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 			if(this.isNew()){
 				this.set('date', Date.now());
 			}
-		}
+		},
 	});
 
 	// Создаем конструктор коллекции

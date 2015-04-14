@@ -11,12 +11,19 @@
 
 		<!-- layout-header -->
 		<script type="text/template" id="header-template">
-			<h1>HI! I am your header</h1>
+			<label>Add New Task</label>
+			<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
 		</script>
 
 		<!-- layout-main -->
-		<script type="text/template" id="main-template">
-			<h2>HI! I am your main</h2>
+		<!-- itemView -->
+		<script type="text/template" id="itemView-template">
+				<%- title %>
+				<button class="delete">X</button>
+		</script>
+		<!-- compositeView -->
+		<script type="text/template" id="compositeView-template">
+		
 		</script>
 
 		<!-- layout-footer -->

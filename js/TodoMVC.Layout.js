@@ -16,11 +16,34 @@ MyApp.module('Layout', function(Layout, App, Backbone){
 	// header view
 	Layout.Header = Backbone.Marionette.ItemView.extend({
 		template: '#header-template',
-	});
+		// єлементі управления
+		ui: {
+			input : '#add-new-todo', 
+		},
+		// события для ui
+		events: {
+			'keypress @ui.input' : 'addNewTodo'
+		},
+		// добавление новой модели
+		addNewTodo: function(e){
+			// создаем переменную со значением кей-кода энтера
+			var Enter_key = 13,
+			// запоминаем в переменную значение нашего инпута
+			todoTitle = this.ui.input.val().trim();
 
-	// main view
-	Layout.Main = Backbone.Marionette.ItemView.extend({
-		template: '#main-template',
+			// теперь ставим условие, если две вышепредставленные переменные имеют какие то значение значит создаем модель
+			if(e.which === Enter_key && todoTitle){
+				this.collection.create({
+					title: todoTitle
+				});
+				// очищаем поле ввода
+				this.ui.input.val('');
+			}
+			console.log('add work');
+			console.log(Enter_key);
+			console.log(todoTitle);
+			console.log(e.which);
+		},
 	});
 
 	//footer view

@@ -40,7 +40,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 
 		showMain: function(TodoCollection){
 			// создфли экземпляр представления main и передали ему коллекцию
-			var main = new App.Layout.Main({
+			var main = new App.TodoList.Views.ListVews({
 				collection: TodoCollection,
 			});
 			// Вставляем наш экземпляр представления main в регион под названием main
