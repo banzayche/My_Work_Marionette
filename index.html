@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<title>Marionette • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		
+		<!-- templates -->
+		<!-- layout-root -->
+		
+
+		<!-- layout-header -->
+		<script type="text/template" id="header-template">
+			<h1>HI! I am your header</h1>
+		</script>
+
+		<!-- layout-main -->
+		<script type="text/template" id="main-template">
+			<h2>HI! I am your main</h2>
+		</script>
+
+		<!-- layout-footer -->
+		<script type="text/template" id="footer-template">
+			<h3>HI! I am your footer</h3>
+		</script>
+
+		<!-- /templates -->
+
+	</head>
+	<body>
+		<section id="root-template">
+			<div id='header'></div>
+			<div id="main"></div>
+			<div id="footer"></div>
+		</section>
+		
+		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
+		<script src="node_modules/jquery/dist/jquery.js"></script>
+		<script src="node_modules/underscore/underscore.js"></script>
+		<script src="node_modules/backbone/backbone.js"></script>
+		<script src="node_modules/backbone.localstorage/backbone.localStorage.js"></script>
+		<script src="node_modules/backbone.marionette/lib/backbone.marionette.js"></script>
+		
+
+		<!-- application -->
+		<script src="js/TodoMVC.js"></script>
+		<script src="js/TodoMVC.Todos.js"></script>
+		<script src="js/TodoMVC.Layout.js"></script>
+		<script src="js/TodoMVC.TodoList.Views.js"></script>
+		<script src="js/TodoMVC.TodoList.js"></script>
+		
+
+		<script>
+			$(function () {
+				// start the TodoMVC app (defined in js/TodoMVC.js)
+				MyApp.start();
+			});
+		</script>
+	</body>
+</html>
