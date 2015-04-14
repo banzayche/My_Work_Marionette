@@ -20,6 +20,11 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 				this.set('date', Date.now());
 			}
 		},
+		// функция смені аттрибута done
+		toggleDone: function(){
+			this.save('done', !this.get('done'));
+			console.log(this.get('done'));
+		},
 	});
 
 	// Создаем конструктор коллекции

@@ -26,7 +26,8 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 			this.showMain(this.TodoCollection);
 			this.showFooter(this.TodoCollection);
 			// фетчим нашу коллекцию с сервера
-			this.TodoCollection.fetch();
+			var self = this;
+			self.TodoCollection.fetch();
 		},
 
 		showHeader: function(TodoCollection){
@@ -44,7 +45,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 				collection: TodoCollection,
 			});
 			// Вставляем наш экземпляр представления main в регион под названием main
-			App.root.showChildView('main', main);
+			App.root.showChildView('main', main);					
 		},
 
 		showFooter: function(TodoCollection){

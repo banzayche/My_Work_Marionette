@@ -39,10 +39,6 @@ MyApp.module('Layout', function(Layout, App, Backbone){
 				// очищаем поле ввода
 				this.ui.input.val('');
 			}
-			console.log('add work');
-			console.log(Enter_key);
-			console.log(todoTitle);
-			console.log(e.which);
 		},
 	});
 

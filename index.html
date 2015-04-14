@@ -18,12 +18,14 @@
 		<!-- layout-main -->
 		<!-- itemView -->
 		<script type="text/template" id="itemView-template">
-				<%- title %>
-				<button class="delete">X</button>
+				<label><input class="get-done" type=checkbox <% if(done){ %> checked <% } %> ><span><%- title %></span></label>
+				<button class="delete pull-right">X</button>
+				<hr>
 		</script>
 		<!-- compositeView -->
 		<script type="text/template" id="compositeView-template">
-		
+			<label><input class="check-all" type=checkbox ><span>Select All</span></label>
+			<hr>
 		</script>
 
 		<!-- layout-footer -->
@@ -38,7 +40,7 @@
 		<section id="root-template">
 			<div id='header'></div>
 			<div id="main"></div>
-			<div id="footer"></div>
+			<div id="footer" class="ovf-a"></div>
 		</section>
 		
 		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
