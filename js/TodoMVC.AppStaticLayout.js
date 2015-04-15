@@ -1,9 +1,9 @@
 /*global Backbone */
 'use strict';
 
-MyApp.module('Layout', function(Layout, App, Backbone){
+MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 	// наше главное представление с регионами
-	Layout.Root = Backbone.Marionette.LayoutView.extend({
+	AppStaticLayout.Root = Backbone.Marionette.LayoutView.extend({
 		el: '#root-template',
 		// добавили регионы
 		regions: {
@@ -14,7 +14,7 @@ MyApp.module('Layout', function(Layout, App, Backbone){
 	});
 
 	// header view
-	Layout.Header = Backbone.Marionette.ItemView.extend({
+	AppStaticLayout.Header = Backbone.Marionette.ItemView.extend({
 		template: '#header-template',
 		// єлементі управления
 		ui: {
@@ -43,7 +43,7 @@ MyApp.module('Layout', function(Layout, App, Backbone){
 	});
 
 	//footer view
-	Layout.Footer = Backbone.Marionette.ItemView.extend({
+	AppStaticLayout.Footer = Backbone.Marionette.ItemView.extend({
 		template: '#footer-template',
 	}); 
 });

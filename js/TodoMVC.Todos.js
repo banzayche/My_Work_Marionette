@@ -37,13 +37,16 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		// функция отмечаниявыполненных дел
 		done: function(someValue){
 			this.each(function(model){
+				// проходим всю коллекцию и меняем атрибут done
 				model.save('done', someValue);
 			});
 		},
 		checkAll: function(){
+			// делаем вычесления для вывода, какой атрибут done присваивать при нажатии на checkAll
 			var setPluck = _.pluck(this.toJSON(), 'done');
 			setPluck = _.difference(setPluck, [true]);
-			return 	setPluck;			
+			if (!setPluck.length) return true
+			else return false			
 		},
 		// // фильтрация коллекции по выполненным
 		// getCompleted: function () {

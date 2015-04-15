@@ -4,7 +4,7 @@
 MyApp.module('TodoList.Views', function(Views, App, Backbone){
 
 	// Item View
-	Views.ItemView = Backbone.Marionette.ItemView.extend({
+	Views.MainItemView = Backbone.Marionette.ItemView.extend({
 		// указали тег-нейм
 		tagName: 'li',
 		// указали шаблон
@@ -19,10 +19,11 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			'click @ui.deleteButton' : 'destroyModel',
 			'click @ui.toggleDone' : 'toggleDone',
 		},
-		onRender: function(){
-			console.log('onRenderItem');
-			//this.trigger('show') 
-		},
+
+		// onRender: function(){
+		// 	console.log('onRenderItem');
+		// },
+
 		// функция смены атрибута done
 		toggleDone: function(){
 			this.model.toggleDone().save();
@@ -40,12 +41,12 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		// шаблон
 		template: '#compositeView-template',
 		// на основе какого конструктора будут создаваться дочерние модели
-		childView: Views.ItemView,
+		childView: Views.MainItemView,
 		// контейнер для дочерних моделей
 		// childViewContainer: "#todo-list",
 		// при любом изменении коллекции - перерендериваем
 		collectionEvents: {
-			'change' : 'render',
+			'change' : 'checkDone',
 		},
 		// элементы управления на этой вью
 		ui:{
@@ -57,38 +58,23 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		},
 		// функция отмечания всех выполненных
 		checkedAll: function(){
-			if(this.ui.checkAll.attr('checked') == 'checked'){
-				this.collection.each(function(model){
-					model.save('done', false);
-				});	
-			} else{
-				this.collection.each(function(model){
-					model.save('done', true);
-				});
-			}	
+			var flag = this.collection.checkAll();
+			console.log('checkedAll '+flag);
+			this.collection.done(!flag);
+			this.render();
+			this.checkDone();
 		},
 		onRender: function(){
 			console.log('onRender');
-			this.checkDone();
-			//this.trigger('show') 
 		},
 		onShow: function(){
 			console.log('onShow');
 		},
 		// check array of done
 		checkDone: function(collection){
-			var self = this;
-			console.log('checkDone');
-			console.log(self.collection)
-				var setPluck = _.pluck(self.collection.toJSON(), 'done');
-				console.log(self.collection)
-				setPluck = _.difference(setPluck, [true]);
-				if(!setPluck.length){
-					self.ui.checkAll.attr('checked', 'true');
-					console.log('win')
-				} else{
-					self.ui.checkAll.removeAttr('checked');
-				}
+			var flag = this.collection.checkAll();
+			console.log('checkDone '+flag);
+			this.ui.checkAll.prop('checked', flag);
 		}
 	});
 });

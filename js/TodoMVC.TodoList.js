@@ -28,13 +28,13 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 			// фетчим нашу коллекцию с сервера
 			var self = this;
 			self.TodoCollection.fetch().done(function(){
-				 self.TodoCollection.trigger('change');
+				self.TodoCollection.trigger('change');
 			});
 		},
 
 		showHeader: function(TodoCollection){
 			// создфли экземпляр представления хедера и передали ему коллекцию
-			var header = new App.Layout.Header({
+			var header = new App.AppStaticLayout.Header({
 				collection: TodoCollection,
 			});
 			// Вставляем наш экземпляр представления header в регион под названием header
@@ -52,7 +52,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 
 		showFooter: function(TodoCollection){
 			// создфли экземпляр представления footer и передали ему коллекцию
-			var footer = new App.Layout.Footer({
+			var footer = new App.AppStaticLayout.Footer({
 				collection: TodoCollection,
 			});
 			// Вставляем наш экземпляр представления footer в регион под названием footer
