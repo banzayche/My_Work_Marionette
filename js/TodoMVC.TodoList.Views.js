@@ -19,10 +19,13 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			'click @ui.deleteButton' : 'destroyModel',
 			'click @ui.toggleDone' : 'toggleDone',
 		},
-
+		onRender: function(){
+			console.log('onRenderItem');
+			//this.trigger('show') 
+		},
 		// функция смены атрибута done
 		toggleDone: function(){
-			this.model.toggleDone();
+			this.model.toggleDone().save();
 		},
 		// функция удаления модели
 		destroyModel: function(){
@@ -40,12 +43,9 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		childView: Views.ItemView,
 		// контейнер для дочерних моделей
 		// childViewContainer: "#todo-list",
-		initialize: function(){
-			this.checkDone();
-		},
 		// при любом изменении коллекции - перерендериваем
 		collectionEvents: {
-			'all' : 'render',
+			'change' : 'render',
 		},
 		// элементы управления на этой вью
 		ui:{
@@ -68,13 +68,20 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			}	
 		},
 		onRender: function(){
+			console.log('onRender');
 			this.checkDone();
+			//this.trigger('show') 
+		},
+		onShow: function(){
+			console.log('onShow');
 		},
 		// check array of done
 		checkDone: function(collection){
 			var self = this;
-			_.delay(function(){
+			console.log('checkDone');
+			console.log(self.collection)
 				var setPluck = _.pluck(self.collection.toJSON(), 'done');
+				console.log(self.collection)
 				setPluck = _.difference(setPluck, [true]);
 				if(!setPluck.length){
 					self.ui.checkAll.attr('checked', 'true');
@@ -82,7 +89,6 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 				} else{
 					self.ui.checkAll.removeAttr('checked');
 				}
-			}, 50);
 		}
 	});
 });

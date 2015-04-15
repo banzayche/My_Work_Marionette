@@ -27,7 +27,9 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 			this.showFooter(this.TodoCollection);
 			// фетчим нашу коллекцию с сервера
 			var self = this;
-			self.TodoCollection.fetch();
+			self.TodoCollection.fetch().done(function(){
+				 self.TodoCollection.trigger('change');
+			});
 		},
 
 		showHeader: function(TodoCollection){

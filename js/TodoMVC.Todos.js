@@ -20,10 +20,9 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 				this.set('date', Date.now());
 			}
 		},
-		// функция смені аттрибута done
+		// функция смены аттрибута done
 		toggleDone: function(){
-			this.save('done', !this.get('done'));
-			console.log(this.get('done'));
+			return this.set('done', !this.get('done'));
 		},
 	});
 
@@ -35,5 +34,24 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		localStorage: new Backbone.LocalStorage('Marionette-Todo-List'),
 		// указываем атрибут для сортировки
 		comparator: 'date',
+		// функция отмечаниявыполненных дел
+		done: function(someValue){
+			this.each(function(model){
+				model.save('done', someValue);
+			});
+		},
+		checkAll: function(){
+			var setPluck = _.pluck(this.toJSON(), 'done');
+			setPluck = _.difference(setPluck, [true]);
+			return 	setPluck;			
+		},
+		// // фильтрация коллекции по выполненным
+		// getCompleted: function () {
+		// 	return this.filter();
+		// },
+		// // фильтрация коллекции по невыполненным
+		// getActive: function () {
+		// 	return this.reject(function(model){!model.get('done')});
+		// },
 	});
 });
