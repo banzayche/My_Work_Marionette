@@ -45,5 +45,30 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 	//footer view
 	AppStaticLayout.Footer = Backbone.Marionette.ItemView.extend({
 		template: '#footer-template',
+		ui: {
+			remove : '.remove-done'
+		},
+		events: {
+			'click @ui.remove' : 'removeDone'
+		},
+		collectionEvents: {
+			'change' : 'render'
+		},
+		removeDone: function(){
+			var complited = this.collection.getCompleted();
+			complited.forEach(function (model) {
+				model.destroy();
+			});			
+		},
+		// тепер будет нижеприведенная конструкция будет отдавать вьюхе модель с необходимыми атрибутами
+		serializeData: function(){
+			var haveDone = _.pluck(this.collection.toJSON(), 'done');
+			haveDone = _.difference(haveDone, [true]);
+			haveDone = haveDone.length;
+			console.log(haveDone)
+			return {
+				"done": haveDone
+			}
+		}
 	}); 
 });

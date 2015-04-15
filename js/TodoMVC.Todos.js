@@ -24,6 +24,10 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		toggleDone: function(){
 			return this.set('done', !this.get('done'));
 		},
+		// функция, возвращающая текущее значение атрибута для текущей модели
+		isCompleted: function () {
+			return this.get('completed');
+		},
 	});
 
 	// Создаем конструктор коллекции
@@ -48,13 +52,9 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 			if (!setPluck.length) return true
 			else return false			
 		},
-		// // фильтрация коллекции по выполненным
-		// getCompleted: function () {
-		// 	return this.filter();
-		// },
-		// // фильтрация коллекции по невыполненным
-		// getActive: function () {
-		// 	return this.reject(function(model){!model.get('done')});
-		// },
+		// фильтрация коллекции по выполненным
+		getCompleted: function () {
+			return this.filter(function(model){return model.get('done') && true});
+		},
 	});
 });
