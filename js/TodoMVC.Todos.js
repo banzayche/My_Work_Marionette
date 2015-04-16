@@ -36,8 +36,6 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		model: Todos.TodoModel,
 		// создаем связь с локальным хранилищем, вместо сервера
 		localStorage: new Backbone.LocalStorage('Marionette-Todo-List'),
-		// указываем атрибут для сортировки
-		comparator: 'date',
 		// функция отмечаниявыполненных дел
 		done: function(someValue){
 			this.each(function(model){
@@ -55,6 +53,18 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		// фильтрация коллекции по выполненным
 		getCompleted: function () {
 			return this.filter(function(model){return model.get('done') && true});
+		},
+
+		// атрибут сортировки по умолчанию
+		sortAttribute: 'date',
+		// функция смены атрибута сортировки(вызывается при нажатии на соответствующий элемент ui)
+		goSort: function(someValue){
+			this.sortAttribute = someValue;
+			this.sort();
+		},
+		// параметры сортировки
+		comparator: function(model){
+			return model.get(this.sortAttribute);
 		},
 	});
 });
