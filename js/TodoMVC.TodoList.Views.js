@@ -64,6 +64,14 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		},
 	});
 
+
+	// Item View
+	Views.NoChildView = Backbone.Marionette.ItemView.extend({
+		id: 'image-attention',
+		// указали шаблон
+		template: '#noChildView-template',
+	});
+
 	// composite view
 	Views.ListVews = Backbone.Marionette.CompositeView.extend({
 		tagName: 'ul',
@@ -72,6 +80,7 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		template: '#compositeView-template',
 		// на основе какого конструктора будут создаваться дочерние модели
 		childView: Views.MainItemView,
+		emptyView: Views.NoChildView,
 		// контейнер для дочерних моделей
 		// childViewContainer: "#todo-list",
 		// при любом изменении коллекции - перерендериваем
