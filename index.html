@@ -13,8 +13,11 @@
 		<script type="text/template" id="header-template">
 			<label>Add New Task</label>
 			<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+			
 			<span class="pull-right">Sort By</span><br>
-			<button class="firs-sort pull-right">Date</button><button class="second-sort pull-right">id</button><button class="third-sort pull-right">Title</button>
+			<button class="firs-sort pull-right" sortby=<%-firstSort%>><%-firstSort%></button>
+			<button class="second-sort pull-right" sortby=<%-secondSort%>><%-secondSort%></button>
+			<button class="third-sort pull-right" sortby=<%-thirdSort%>><%-thirdSort%></button>
 		</script>
 
 		<!-- layout-main -->

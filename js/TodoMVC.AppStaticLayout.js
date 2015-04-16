@@ -18,11 +18,22 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		template: '#header-template',
 		// єлементі управления
 		ui: {
-			input : '#add-new-todo', 
+			input : '#add-new-todo',
+			sort1 : '.firs-sort',
+			sort2 : '.second-sort',
+			sort3 : '.third-sort', 
 		},
 		// события для ui
 		events: {
-			'keypress @ui.input' : 'addNewTodo'
+			'keypress @ui.input' : 'addNewTodo',
+			'click @ui.sort1' : 'sortBegin',
+			'click @ui.sort2' : 'sortBegin',
+			'click @ui.sort3' : 'sortBegin',
+		},
+		// функция обработки значения сортировки
+		sortBegin:function(e){
+			var parameter = $(e.target).attr('sortby');
+			this.collection.goSort(parameter);
 		},
 		// добавление новой модели
 		addNewTodo: function(e){
@@ -40,6 +51,16 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 				this.ui.input.val('');
 			}
 		},
+
+		// тепер будет нижеприведенная конструкция будет отдавать вьюхе модель с необходимыми атрибутами
+		serializeData: function(){
+			// отдаем данные, необходимые представлению
+			return {
+				"firstSort": 'title',
+				"secondSort" : 'id',
+				"thirdSort" : 'date'
+			}
+		}
 	});
 
 	//footer view
