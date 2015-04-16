@@ -13,16 +13,46 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		ui: {
 			deleteButton : '.delete',
 			toggleDone : '.get-done',
+			onEditSection : '.first-section-model-ui',
+			editInput : '.edit-model-title'
 		},
 		// события по действиям на элементы ui
 		events: {
 			'click @ui.deleteButton' : 'destroyModel',
 			'click @ui.toggleDone' : 'toggleDone',
+			'dblclick @ui.onEditSection' : 'showEditInput',
+			'keypress @ui.editInput' : 'editModelTitle',
+			'blur @ui.editInput' : 'render'
 		},
-
+		modelEvents: {
+			'change' : 'render'
+		},
 		// onRender: function(){
 		// 	console.log('onRenderItem');
 		// },
+
+		// Скрытие чекбокса с кнопкой и названием модели и показ инпута для редактирования тайтла модели
+		showEditInput: function(){
+			this.ui.onEditSection.hide();
+			this.ui.editInput.show();
+			this.ui.editInput.focus();			
+		},
+		// реализация редактирования модели
+		editModelTitle: function(e){
+			// это кейкод энтера
+			var keyCode = 13;
+			var editInput = this.ui.editInput;
+			// сохраняем значение с инпута
+			var newTitle = editInput.val().trim();
+			// проверяем, чтобы был нажат именно энтер и фокус был именно на нашем ui
+			if(editInput.focus && e.keyCode === keyCode && !!newTitle.length){
+				// сохраняем новое валидное значение
+				this.model.save('title', newTitle);
+			} else if(!newTitle.length){
+				// если текствое поле пусто - модель необходимо удалить
+				this.destroyModel();
+			}
+		},
 
 		// функция смены атрибута done
 		toggleDone: function(){

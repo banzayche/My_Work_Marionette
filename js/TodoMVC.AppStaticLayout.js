@@ -52,7 +52,8 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			'click @ui.remove' : 'removeDone'
 		},
 		collectionEvents: {
-			'change' : 'render'
+			'change' : 'render',
+			'destroy' : 'render'
 		},
 		removeDone: function(){
 			var complited = this.collection.getCompleted();
@@ -62,12 +63,20 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		},
 		// тепер будет нижеприведенная конструкция будет отдавать вьюхе модель с необходимыми атрибутами
 		serializeData: function(){
-			var haveDone = _.pluck(this.collection.toJSON(), 'done');
-			haveDone = _.difference(haveDone, [true]);
-			haveDone = haveDone.length;
-			console.log(haveDone)
+			// получаем массив из значений ключа done
+			var haveDo = _.pluck(this.collection.toJSON(), 'done');
+			// получаем длинну нашего массива
+			var done = this.collection.length;
+			// исключаем все значения true в массиве
+			haveDo = _.difference(haveDo, [true]);
+			// узнаем длинну массива
+			haveDo = haveDo.length;
+			// узнаем количество выполненных дел
+			done = done - haveDo;
+			// отдаем данные, которые необходимо будет вывести в представлении
 			return {
-				"done": haveDone
+				"haveDo": haveDo,
+				"done" : done
 			}
 		}
 	}); 

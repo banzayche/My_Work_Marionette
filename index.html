@@ -18,9 +18,12 @@
 		<!-- layout-main -->
 		<!-- itemView -->
 		<script type="text/template" id="itemView-template">
-				<label><input class="get-done" type=checkbox <% if(done){ %> checked <% } %> ><span><%- title %></span></label>
+			<div class="first-section-model-ui ovf-a">
+				<input class="get-done" type=checkbox <% if(done){ %> checked <% } %> ><span><%- title %></span>
 				<button class="delete pull-right">X</button>
-				<hr>
+			</div>
+			<input type="text" class="edit-model-title" value=<%-title%>>
+			<hr>
 		</script>
 		<!-- compositeView -->
 		<script type="text/template" id="compositeView-template">
@@ -30,8 +33,8 @@
 
 		<!-- layout-footer -->
 		<script type="text/template" id="footer-template">
-			<h3>You have to do <strong><%-done%> tasks</strong></h3>
-			<button class="remove-done pull-right">Remove done</button>
+			<h3>You have to do <strong><%-haveDo%> <%if(haveDo===1){%> task <%} else{%> tasks <%}%></strong></h3>
+			<button class="remove-done pull-right">Remove <strong><%- done %> done <%if(done===1){%> task <%} else{%> tasks <%}%></strong> </button>
 		</script>
 
 		<!-- /templates -->
