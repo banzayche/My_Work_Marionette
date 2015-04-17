@@ -42,7 +42,6 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		sortBegin:function(e){
 			var parameter = $(e.target).attr('sortby');
 			this.collection.goSort(parameter);
-
 		},
 		hideInput: function(){
 			var filterValue = MyApp.request('filterState').get('filter');
@@ -121,5 +120,13 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 				"done" : done
 			}
 		}
-	}); 
+	});
+
+	//author view
+	AppStaticLayout.AuthorPage = Backbone.Marionette.ItemView.extend({
+		id: 'author-page',
+		className: 'ovf-a',
+		template: '#author-page-layout',
+	});
+
 });

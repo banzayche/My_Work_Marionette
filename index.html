@@ -10,8 +10,8 @@
 
 		<!-- layout-header -->
 		<script type="text/template" id="header-template">
-			<section>
-				<!--<a href="#/clear_page">Clear all</a>-->
+			<section class="filter-section">
+				<h3>Filtering by:</h3>
 				<a href="#/all" class="go-route active">All</a>
 				<a href="#/done" class="go-route">Alredy done</a>
 				<a href="#/have_done" class="go-route">Have to do</a>
@@ -20,11 +20,14 @@
 				<label>Add New Task</label>
 				<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
 			</div>
+			<a href="#/author_page">About App</a>
 			
-			<span class="pull-right">Sort By</span><br>
-			<button class="firs-sort pull-right" sortby=<%-firstSort%>><%-firstSort%></button>
-			<button class="second-sort pull-right" sortby=<%-secondSort%>><%-secondSort%></button>
-			<button class="third-sort pull-right" sortby=<%-thirdSort%>><%-thirdSort%></button>
+			<div class="sort-section ovf-a">
+				<span class="pull-right">Sort By</span><br>
+				<button class="firs-sort pull-right" sortby=<%-firstSort%>><%-firstSort%></button>
+				<button class="second-sort pull-right" sortby=<%-secondSort%>><%-secondSort%></button>
+				<button class="third-sort pull-right" sortby=<%-thirdSort%>><%-thirdSort%></button>
+			</div>
 		</script>
 
 		<!-- layout-main -->
@@ -52,7 +55,14 @@
 			<h3>You have to do <strong><%-haveDo%> <%if(haveDo===1){%> task <%} else{%> tasks <%}%></strong></h3>
 			<button class="remove-done pull-right">Remove <strong><%- done %> done <%if(done===1){%> task <%} else{%> tasks <%}%></strong> </button>
 		</script>
+		
 
+		<!-- author's page layout -->
+		<script type="text/template" id="author-page-layout">
+			<h2>This app is built on<br>backbone.js + Marionette.js</h2>
+			<img src='http://l-lin.github.io/images/marionettejs.png' id="marionette-img">
+			<a href="#/home"> To Home </a>
+		</script>
 		<!-- /templates -->
 
 	</head>
