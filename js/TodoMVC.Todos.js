@@ -28,6 +28,16 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		isCompleted: function () {
 			return this.get('completed');
 		},
+		accordance: function(filterVal){
+			// если роут ровняется all - то вернет "правда" для всех моделей
+			if(filterVal === 'all'){
+				return true;
+			} else if( filterVal === 'done'){
+				return this.get('done');
+			} else if( filterVal === 'have_done' ){
+				return !this.get('done');
+			}
+		},
 	});
 
 	// Создаем конструктор коллекции

@@ -65,7 +65,7 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 	});
 
 
-	// Item View
+	// View for empty collection
 	Views.NoChildView = Backbone.Marionette.ItemView.extend({
 		id: 'image-attention',
 		// указали шаблон
@@ -83,6 +83,10 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		emptyView: Views.NoChildView,
 		// контейнер для дочерних моделей
 		// childViewContainer: "#todo-list",
+		initialize: function(){
+			// Слушаем filterState и если модель изменится то нужно перерендеривать вью
+			this.listenTo(App.request('filterState'), 'change:filter', this.render, this);
+		},
 		// при любом изменении коллекции - перерендериваем
 		collectionEvents: {
 			'change' : 'checkDone',
@@ -95,6 +99,21 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		events: {
 			'click @ui.checkAll' : 'checkedAll',
 		},
+		
+		// -------------------------------------------------------------
+		// изменяем стандартную функцию прорисовки моделей из коллекции
+		addChild: function(childModel){
+			var newFilter = MyApp.request('filterState').get('filter');
+			console.log(newFilter);
+			console.log(childModel.accordance(newFilter));
+			// если метод соответствия модели для данного роута вернет "правда" то она рисуется
+			if(childModel.accordance(newFilter))	{
+				// стандартный метод прорисовки моделей
+				Backbone.Marionette.CompositeView.prototype.addChild.apply(this, arguments);
+			}
+		},
+		// -------------------------------------------------------------
+
 		// функция отмечания всех выполненных
 		checkedAll: function(){
 			var flag = this.collection.checkAll();
