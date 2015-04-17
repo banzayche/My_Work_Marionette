@@ -37,6 +37,7 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			this.ui.editInput.show();
 			this.ui.editInput.focus();			
 		},
+
 		// реализация редактирования модели
 		editModelTitle: function(e){
 			// это кейкод энтера
@@ -58,52 +59,89 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		toggleDone: function(){
 			this.model.toggleDone().save();
 		},
+
 		// функция удаления модели
 		destroyModel: function(){
 			this.model.destroy();
 		},
 	});
 
+
+	// View for empty collection
+	Views.NoChildView = Backbone.Marionette.ItemView.extend({
+		id: 'image-attention',
+		// указали шаблон
+		template: '#noChildView-template',
+	});
+
 	// composite view
 	Views.ListVews = Backbone.Marionette.CompositeView.extend({
 		tagName: 'ul',
+
 		id: 'todo-list',
+
 		// шаблон
 		template: '#compositeView-template',
+
 		// на основе какого конструктора будут создаваться дочерние модели
 		childView: Views.MainItemView,
+
+		// представление для пустой коллекции
+		emptyView: Views.NoChildView,
+
 		// контейнер для дочерних моделей
 		// childViewContainer: "#todo-list",
+		initialize: function(){
+			// Слушаем filterState и если модель изменится то нужно перерендеривать вью
+			this.listenTo(App.request('filterState'), 'change:filter', this.render, this);
+		},
+
 		// при любом изменении коллекции - перерендериваем
 		collectionEvents: {
 			'change' : 'checkDone',
 		},
+
 		// элементы управления на этой вью
 		ui:{
 			checkAll : '.check-all',
 		},
+
 		// события, касающиеся элементов управления
 		events: {
 			'click @ui.checkAll' : 'checkedAll',
 		},
+		
+		// -------------------------------------------------------------
+		// изменяем стандартную функцию прорисовки моделей из коллекции
+		addChild: function(childModel){
+			var newFilter = MyApp.request('filterState').get('filter');
+			// если метод соответствия модели для данного роута вернет "правда" то она рисуется
+			if(childModel.accordance(newFilter))	{
+				// стандартный метод прорисовки моделей
+				Backbone.Marionette.CompositeView.prototype.addChild.apply(this, arguments);
+			}
+		},
+		// -------------------------------------------------------------
+
 		// функция отмечания всех выполненных
 		checkedAll: function(){
 			var flag = this.collection.checkAll();
-			console.log('checkedAll '+flag);
 			this.collection.done(!flag);
 			this.render();
 			this.checkDone();
 		},
+
 		onRender: function(){
 			console.log('onRender');
 		},
+
 		onShow: function(){
 			console.log('onShow');
 		},
+		
 		// check array of done
 		checkDone: function(collection){
 			var flag = this.collection.checkAll();
-			console.log('checkDone '+flag);
 			this.ui.checkAll.prop('checked', flag);
 		}
 	});

@@ -7,7 +7,7 @@ var App = Backbone.Marionette.Application.extend({
   setRootLayout: function(){
     // Основе созданного нами конструктора рутового представления в файле MyApp.Layout.js
     // создаем рутовое (главное) представление для нашего приложения 
-    this.root = new MyApp.AppStaticLayout.Root();
+    this.root = new MyApp.AppStaticLayout.GeneralView();
   },
 
   onStart: function(){
@@ -19,4 +19,18 @@ var App = Backbone.Marionette.Application.extend({
 });
 // Сделали наше приложение глобальным
 window.MyApp = new App();
+
+// создаем анонимную функцию, в которой укажем:
+// обработчик для спец запроса и модель, содержащую значение для фильтрации коллекции
+(function(){
+  // модель со значением фильтрации
+  var filterState = new Backbone.Model({
+    filter: 'all'
+  });
+
+  // обработчик запроса 
+  MyApp.reqres.setHandler('filterState', function(){
+    return filterState;
+  });
+})();
 

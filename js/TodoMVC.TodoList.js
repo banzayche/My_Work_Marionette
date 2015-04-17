@@ -62,14 +62,31 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 		// Функция обработки значения роута
 		LoadApp: function(route){
 			// route - текущее значение роута
-			console.log(route + ' something does not happening')
-			return true;
+			// если был указан роут, который соответствует следующему значению
+			// очистим всю страницу
+			if(route === 'author_page') {
+				var authorPage = new App.AppStaticLayout.AuthorPage();
+				App.root.getRegion('header').empty();
+				App.root.getRegion('main').empty();
+				App.root.getRegion('footer').empty();
+				App.root.getRegion('header').show(authorPage);		
+			} else if(route === 'home'){
+				MyApp.request('filterState').set('filter', 'all');
+				this.start();
+			} else {
+				// значение фильтра до изменения
+				// console.log(MyApp.request('filterState').get('filter'));
+				// изменяем значение фильтра
+				MyApp.request('filterState').set('filter', route);
+				// значение фильтра после изменения
+				// console.log(MyApp.request('filterState').get('filter'));
+			}
 		}
 	});
 
 
 	// Одна из самых главных частей всего приложения - общий старт
-	App.on('start', function(){
+	MyApp.on('start', function(){
 		// создаем экземпляр контроллера
 		var controller = new TodoList.Controller();
 		//указываем экземпляр роутера
