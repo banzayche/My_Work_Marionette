@@ -104,8 +104,6 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		// изменяем стандартную функцию прорисовки моделей из коллекции
 		addChild: function(childModel){
 			var newFilter = MyApp.request('filterState').get('filter');
-			console.log(newFilter);
-			console.log(childModel.accordance(newFilter));
 			// если метод соответствия модели для данного роута вернет "правда" то она рисуется
 			if(childModel.accordance(newFilter))	{
 				// стандартный метод прорисовки моделей
@@ -117,7 +115,6 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		// функция отмечания всех выполненных
 		checkedAll: function(){
 			var flag = this.collection.checkAll();
-			console.log('checkedAll '+flag);
 			this.collection.done(!flag);
 			this.render();
 			this.checkDone();
@@ -131,7 +128,6 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		// check array of done
 		checkDone: function(collection){
 			var flag = this.collection.checkAll();
-			console.log('checkDone '+flag);
 			this.ui.checkAll.prop('checked', flag);
 		}
 	});
