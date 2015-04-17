@@ -86,7 +86,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 
 
 	// Одна из самых главных частей всего приложения - общий старт
-	App.on('start', function(){
+	MyApp.on('start', function(){
 		// создаем экземпляр контроллера
 		var controller = new TodoList.Controller();
 		//указываем экземпляр роутера
