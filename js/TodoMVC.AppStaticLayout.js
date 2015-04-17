@@ -15,13 +15,20 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 
 	// header view
 	AppStaticLayout.Header = Backbone.Marionette.ItemView.extend({
+		id: 'header-element',
+		className: 'ovf-a',
 		template: '#header-template',
+		initialize: function(){
+			// Слушаем filterState и если модель изменится то нужно перерендеривать вью
+			this.listenTo(App.request('filterState'), 'change:filter', this.hideInput, this);
+		},
 		// єлементі управления
 		ui: {
 			input : '#add-new-todo',
 			sort1 : '.firs-sort',
 			sort2 : '.second-sort',
-			sort3 : '.third-sort', 
+			sort3 : '.third-sort',
+			goRoute : '.go-route' 
 		},
 		// события для ui
 		events: {
@@ -29,11 +36,25 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			'click @ui.sort1' : 'sortBegin',
 			'click @ui.sort2' : 'sortBegin',
 			'click @ui.sort3' : 'sortBegin',
+			'click @ui.goRoute' : 'changeButtonClass'
 		},
 		// функция обработки значения сортировки
 		sortBegin:function(e){
 			var parameter = $(e.target).attr('sortby');
 			this.collection.goSort(parameter);
+
+		},
+		hideInput: function(){
+			var filterValue = MyApp.request('filterState').get('filter');
+			if(filterValue === 'all'){
+				$('#add-section').show();
+			} else{
+				$('#add-section').hide();
+			}
+		},
+		changeButtonClass: function(e){
+			this.ui.goRoute.removeClass('active');
+			$(e.target).addClass('active');
 		},
 		// добавление новой модели
 		addNewTodo: function(e){

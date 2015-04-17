@@ -6,13 +6,20 @@
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 		
 		<!-- templates -->
-		<!-- layout-root -->
-		
+		<!-- layout-root -->		
 
 		<!-- layout-header -->
 		<script type="text/template" id="header-template">
-			<label>Add New Task</label>
-			<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+			<section>
+				<!--<a href="#/clear_page">Clear all</a>-->
+				<a href="#/all" class="go-route active">All</a>
+				<a href="#/done" class="go-route">Alredy done</a>
+				<a href="#/have_done" class="go-route">Have to do</a>
+			</section>
+			<div id='add-section'>
+				<label>Add New Task</label>
+				<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+			</div>
 			
 			<span class="pull-right">Sort By</span><br>
 			<button class="firs-sort pull-right" sortby=<%-firstSort%>><%-firstSort%></button>
@@ -38,7 +45,7 @@
 		<!-- no child view for compositeView -->
 		<script type="text/template" id="noChildView-template">
 			<img src="http://naudachu.com/images/uploads/adv_report/ta5Q436bhfkY6Qsiy2KiDkEi9.gif">
-			<p>Your<br>collection<br>is empty!</p>
+			<p>This<br>collection<br>is empty!</p>
 		</script>
 		<!-- layout-footer -->
 		<script type="text/template" id="footer-template">
@@ -51,7 +58,7 @@
 	</head>
 	<body>
 		<section id="root-template">
-			<div id='header' class="ovf-a"></div>
+			<div id='header'></div>
 			<div id="main"></div>
 			<div id="footer" class="ovf-a"></div>
 		</section>

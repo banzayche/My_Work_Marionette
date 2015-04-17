@@ -63,7 +63,20 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 		LoadApp: function(route){
 			// route - текущее значение роута
 			console.log(route + ' something does not happening')
-			return true;
+			// если был указан роут, который соответствует следующему значению
+			// очистим всю страницу
+			// if(route === 'clear_page') {
+			// 	App.root.getRegion('header').empty();
+			// 	App.root.getRegion('main').empty();
+			// 	App.root.getRegion('footer').empty();		
+			// } else{
+				// значение фильтра до изменения
+				console.log(MyApp.request('filterState').get('filter'));
+				// изменяем значение фильтра
+				MyApp.request('filterState').set('filter', route);
+				// значение фильтра после изменения
+				console.log(MyApp.request('filterState').get('filter'));
+			// }
 		}
 	});
 
