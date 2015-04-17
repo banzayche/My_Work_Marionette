@@ -7,7 +7,7 @@ var App = Backbone.Marionette.Application.extend({
   setRootLayout: function(){
     // Основе созданного нами конструктора рутового представления в файле MyApp.Layout.js
     // создаем рутовое (главное) представление для нашего приложения 
-    this.root = new MyApp.AppStaticLayout.Root();
+    this.root = new MyApp.AppStaticLayout.GeneralView();
   },
 
   onStart: function(){

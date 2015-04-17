@@ -8,11 +8,11 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		// указали все предпологаемые атрибуты модели
 		defaults: {
 			title: undefined,
-			type: undefined,
 			done: false,
 			id: undefined,
 			date: undefined
 		},
+
 		// при инициализации присваеваем текущую дату создания
 		initialize: function(){
 			// если модель новая - присваеваем текущую дату
@@ -20,14 +20,17 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 				this.set('date', Date.now());
 			}
 		},
+
 		// функция смены аттрибута done
 		toggleDone: function(){
 			return this.set('done', !this.get('done'));
 		},
+
 		// функция, возвращающая текущее значение атрибута для текущей модели
 		isCompleted: function () {
 			return this.get('completed');
 		},
+
 		accordance: function(filterVal){
 			// если роут ровняется all - то вернет "правда" для всех моделей
 			if(filterVal === 'all'){
@@ -40,12 +43,16 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 		},
 	});
 
+
+
 	// Создаем конструктор коллекции
 	Todos.TodoCollection = Backbone.Collection.extend({
 		// указали на основе какого конструктора будут модели в коллекции
 		model: Todos.TodoModel,
+
 		// создаем связь с локальным хранилищем, вместо сервера
 		localStorage: new Backbone.LocalStorage('Marionette-Todo-List'),
+
 		// функция отмечаниявыполненных дел
 		done: function(someValue){
 			this.each(function(model){
@@ -53,6 +60,7 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 				model.save('done', someValue);
 			});
 		},
+
 		checkAll: function(){
 			// делаем вычесления для вывода, какой атрибут done присваивать при нажатии на checkAll
 			var setPluck = _.pluck(this.toJSON(), 'done');
@@ -60,6 +68,7 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 			if (!setPluck.length) return true
 			else return false			
 		},
+
 		// фильтрация коллекции по выполненным
 		getCompleted: function () {
 			return this.filter(function(model){return model.get('done') && true});
@@ -67,11 +76,13 @@ MyApp.module("Todos", function(Todos, App, Backbone){
 
 		// атрибут сортировки по умолчанию
 		sortAttribute: 'date',
+
 		// функция смены атрибута сортировки(вызывается при нажатии на соответствующий элемент ui)
 		goSort: function(someValue){
 			this.sortAttribute = someValue;
 			this.sort();
 		},
+
 		// параметры сортировки
 		comparator: function(model){
 			return model.get(this.sortAttribute);

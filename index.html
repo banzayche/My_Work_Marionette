@@ -4,10 +4,7 @@
 		<meta charset="utf-8">
 		<title>Marionette • TodoMVC</title>
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
-		
 		<!-- templates -->
-		<!-- layout-root -->		
-
 		<!-- layout-header -->
 		<script type="text/template" id="header-template">
 			<section class="filter-section">
@@ -40,20 +37,23 @@
 			<input type="text" class="edit-model-title" value=<%-title%>>
 			<hr>
 		</script>
+
 		<!-- compositeView -->
 		<script type="text/template" id="compositeView-template">
 			<label><input class="check-all" type=checkbox ><span>Select All</span></label>
 			<hr>
 		</script>
+
 		<!-- no child view for compositeView -->
 		<script type="text/template" id="noChildView-template">
 			<img src="http://naudachu.com/images/uploads/adv_report/ta5Q436bhfkY6Qsiy2KiDkEi9.gif">
 			<p>This<br>collection<br>is empty!</p>
 		</script>
+
 		<!-- layout-footer -->
 		<script type="text/template" id="footer-template">
-			<h3>You have to do <strong><%-haveDo%> <%if(haveDo===1){%> task <%} else{%> tasks <%}%></strong></h3>
-			<button class="remove-done pull-right">Remove <strong><%- done %> done <%if(done===1){%> task <%} else{%> tasks <%}%></strong> </button>
+			<h3>You have to do <strong><%-haveDo%> <% if( haveDo === 1 ){%> task <%} else{%> tasks <%}%></strong></h3>
+			<button class="remove-done pull-right">Remove <strong><%- done %> done <% if( done === 1 ){%> task <%} else{%> tasks <%}%></strong> </button>
 		</script>
 		
 
@@ -64,7 +64,6 @@
 			<a href="#/home" class="single-btn"> To Home </a>
 		</script>
 		<!-- /templates -->
-
 	</head>
 	<body>
 		<section id="root-template">
