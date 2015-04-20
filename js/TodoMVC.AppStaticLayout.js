@@ -14,25 +14,31 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 	});
 
 	// header view
-	AppStaticLayout.Header = Backbone.Marionette.ItemView.extend({
+	AppStaticLayout.Header = Backbone.Marionette.LayoutView.extend({
 		id: 'header-element',
 
 		className: 'ovf-a',
 
 		template: '#header-template',
 
-		initialize: function(){
-			// Слушаем filterState и если модель изменится то нужно перерендеривать вью
-			this.listenTo(App.request('filterState'), 'change:filter', this.hideInput, this);
+		regions: {
+			inputarea: '#input-area',
 		},
 
+		initialize: function(){
+			// Слушаем filterState и если модель изменится то проверяем, правильно ли отображен инпут
+			this.listenTo(App.request('filterState'), 'change:filter', this.hideInput, this);
+		},
+		onShow: function(){
+			this.hideInput();
+		},
 		// єлементі управления
 		ui: {
 			input : '#add-new-todo',
 			sort1 : '.firs-sort',
 			sort2 : '.second-sort',
 			sort3 : '.third-sort',
-			goRoute : '.go-route' 
+			goRoute : '.go-route',
 		},
 
 		// события для ui
@@ -41,22 +47,30 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			'click @ui.sort1' : 'sortBegin',
 			'click @ui.sort2' : 'sortBegin',
 			'click @ui.sort3' : 'sortBegin',
-			'click @ui.goRoute' : 'changeButtonClass'
+			'click @ui.goRoute' : 'changeButtonClass',
 		},
-
 		// функция обработки значения сортировки
 		sortBegin:function(e){
 			var parameter = $(e.target).attr('sortby');
 			this.collection.goSort(parameter);
 		},
-
+		// коррекция отображения главного поля ввода
 		hideInput: function(){
-			var filterValue = MyApp.request('filterState').get('filter');
-			if(filterValue === 'all'){
-				$('#add-section').show();
+			var inputTemplate,
+				inputCondition = MyApp.request('filterState').get('generalInput');
+			// проверяем какое значение имеет атрибут спец модели,
+			// и в зависимости от этого изменяем шаблон представления
+			if (inputCondition === true) {
+				inputTemplate = '#input-area-layout';
 			} else{
-				$('#add-section').hide();
+				inputTemplate = '#input-area-empty-layout';
 			}
+			// создаем вью для отображении в регионе
+			var inputView = new Backbone.Marionette.ItemView({
+				template: inputTemplate,
+			});
+			// показываем регион
+			this.getRegion('inputarea').show(inputView);			
 		},
 
 		changeButtonClass: function(e){
