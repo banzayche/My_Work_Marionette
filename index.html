@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<title>Marionette • TodoMVC</title>
 		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+
 		<!-- templates -->
 
 		<!-- layout loading -->
@@ -48,6 +49,7 @@
 		<script type="text/template" id="itemView-template">
 			<div class="first-section-model-ui ovf-a">
 				<input class="get-done" type=checkbox <% if(done){ %> checked <% } %> ><span><%- title %></span>
+				<button id="edit">Edit</button>
 				<button class="delete pull-right">X</button>
 			</div>
 			<input type="text" class="edit-model-title" value="<%-title%>">
@@ -79,17 +81,40 @@
 			<img src='http://l-lin.github.io/images/marionettejs.png' id="marionette-img">
 			<a href="#/home" class="single-btn"> To Home </a>
 		</script>
+		
+		<!-- popup -->
+		<script type="text/template" id="popup-template">
+			<span><b>If you wish you can change the attributes of model.</b></span>
+			<button id="close"><b>x</b></button>
+			<hr>			
+			<table>
+				<tr>
+					<td>Title: </td>
+					<td><input id="title" type="text" value="<%-title%>"></td>
+				</tr>
+				<tr>
+					<td>Done? </td>
+					<td><input id="done" type="checkbox" <%if(done){%>checked<%}%>></td>
+				</tr>
+			</table>
+			<hr>
+			<button id="send">Submit</button>							
+		</script>
 		<!-- /templates -->
 	</head>
 	<body>
 		<section id="root-template">
 			<div id='header'></div>
 			<div id="main"></div>
-			<div id="footer" class="ovf-a"></div>			
+			<div id="footer" class="ovf-a"></div>
+			<div id="popup"></div>			
 		</section>
+		
+			
 		
 		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
 		<script src="node_modules/jquery/dist/jquery.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>		
 		<script src="node_modules/underscore/underscore.js"></script>
 		<script src="node_modules/backbone/backbone.js"></script>
 		<script src="node_modules/backbone.localstorage/backbone.localStorage.js"></script>
@@ -100,10 +125,10 @@
 		<script src="js/TodoMVC.js"></script>
 		<script src="js/TodoMVC.Todos.js"></script>
 		<script src="js/TodoMVC.AppStaticLayout.js"></script>
+		<script src="js/TodoMVC.PopUp.js"></script>
 		<script src="js/TodoMVC.TodoList.Views.js"></script>
 		<script src="js/TodoMVC.TodoList.js"></script>
 		
-
 		<script>
 			$(function () {
 				// start the TodoMVC app (defined in js/TodoMVC.js)

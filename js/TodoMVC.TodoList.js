@@ -33,7 +33,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 					self.showHeader(self.TodoCollection);
 					self.showMain(self.TodoCollection);
 					self.showFooter(self.TodoCollection);
-				}, 1000);
+				}, 500);
 			});
 		},
 
