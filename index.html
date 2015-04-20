@@ -13,9 +13,7 @@
 				<a href="#/done" class="go-route">Alredy done</a>
 				<a href="#/have_done" class="go-route">Have to do</a>
 			</section>
-			<div id='add-section'>
-				<label>Add New Task</label>
-				<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+			<div id='input-area'>				
 			</div>
 			<a href="#/author_page" class="single-btn">About App</a>
 			
@@ -27,6 +25,14 @@
 			</div>
 		</script>
 
+		<script type="text/layout" id="input-area-layout">
+			<label>Add New Task</label>
+			<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+		</script>
+		
+		<script type="text/layout" id="input-area-empty-layout">
+			<h3>If you want to add a new task, go to the category  "all"!</h3>
+		</script>		
 		<!-- layout-main -->
 		<!-- itemView -->
 		<script type="text/template" id="itemView-template">
@@ -69,7 +75,7 @@
 		<section id="root-template">
 			<div id='header'></div>
 			<div id="main"></div>
-			<div id="footer" class="ovf-a"></div>
+			<div id="footer" class="ovf-a"></div>			
 		</section>
 		
 		<!--<script src="node_modules/todomvc-common/base.js"></script>-->

@@ -72,12 +72,22 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 				App.root.getRegion('header').show(authorPage);		
 			} else if(route === 'home'){
 				MyApp.request('filterState').set('filter', 'all');
+				// управление главным инпутом
+				MyApp.request('filterState').set('generalInput', true);
 				this.start();
 			} else {
 				// значение фильтра до изменения
 				// console.log(MyApp.request('filterState').get('filter'));
+				// управление отображение главного поля ввода модели
+				if(route === 'all') {
+					MyApp.request('filterState').set('generalInput', true);
+				} else{
+					MyApp.request('filterState').set('generalInput', false);
+				}
+
 				// изменяем значение фильтра
-				MyApp.request('filterState').set('filter', route);
+				MyApp.request('filterState').set('filter', route);						
+				
 				// значение фильтра после изменения
 				// console.log(MyApp.request('filterState').get('filter'));
 			}

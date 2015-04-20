@@ -131,13 +131,13 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			this.checkDone();
 		},
 
-		onRender: function(){
-			console.log('onRender');
-		},
+		// onRender: function(){
+		// 	console.log('onRender');
+		// },
 
-		onShow: function(){
-			console.log('onShow');
-		},
+		// onShow: function(){
+		// 	console.log('onShow');
+		// },
 		
 		// check array of done
 		checkDone: function(collection){

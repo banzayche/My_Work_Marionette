@@ -25,7 +25,8 @@ window.MyApp = new App();
 (function(){
   // модель со значением фильтрации
   var filterState = new Backbone.Model({
-    filter: 'all'
+    filter: 'all',
+    generalInput: true
   });
 
   // обработчик запроса 
