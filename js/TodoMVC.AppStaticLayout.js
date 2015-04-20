@@ -9,7 +9,8 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		regions: {
 			header: '#header',
 			main: '#main',
-			footer: '#footer'
+			footer: '#footer',
+			popup: '#popup'
 		}
 	});
 
@@ -32,7 +33,7 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		onShow: function(){
 			this.hideInput();
 		},
-		// єлементі управления
+		// єлементы управления
 		ui: {
 			sort1 : '.firs-sort',
 			sort2 : '.second-sort',

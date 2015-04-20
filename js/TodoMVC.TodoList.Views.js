@@ -14,7 +14,8 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			deleteButton : '.delete',
 			toggleDone : '.get-done',
 			onEditSection : '.first-section-model-ui',
-			editInput : '.edit-model-title'
+			editInput : '.edit-model-title',
+			popup: '#edit'
 		},
 		// события по действиям на элементы ui
 		events: {
@@ -22,7 +23,8 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 			'click @ui.toggleDone' : 'toggleDone',
 			'dblclick @ui.onEditSection' : 'showEditInput',
 			'keypress @ui.editInput' : 'editModelTitle',
-			'blur @ui.editInput' : 'render'
+			'blur @ui.editInput' : 'render',
+			'click @ui.popup' : 'popupToggle'
 		},
 		modelEvents: {
 			'change' : 'render'
@@ -30,7 +32,15 @@ MyApp.module('TodoList.Views', function(Views, App, Backbone){
 		// onRender: function(){
 		// 	console.log('onRenderItem');
 		// },
-
+		//вызов попапа
+		popupToggle: function(){
+			var model = this.model;
+			var popup = new MyApp.PopUp.PopUpView({
+				model: model,
+			});
+			App.root.getRegion('popup').show(popup);
+			
+		},
 		// Скрытие чекбокса с кнопкой и названием модели и показ инпута для редактирования тайтла модели
 		showEditInput: function(){
 			this.ui.onEditSection.hide();
