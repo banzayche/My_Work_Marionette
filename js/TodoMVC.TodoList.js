@@ -20,16 +20,31 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 
 		// что будет выполняться при старте
 		start: function(){
-			// каждая следующая строчка - это вызов функции находящейся в контроллере
-			// которая в свою очередь запускает отведенное ей представление
-			this.showHeader(this.TodoCollection);
-			this.showMain(this.TodoCollection);
-			this.showFooter(this.TodoCollection);
+			// запускаем функцию представления значка загрузки покуда коллекция фетчится
+			this.showLoading();
 			// фетчим нашу коллекцию с сервера
 			var self = this;
 			self.TodoCollection.fetch().done(function(){
 				self.TodoCollection.trigger('change');
+				// псевдо-время загрузки с сервера
+				_.delay(function(){
+					// каждая следующая строчка - это вызов функции находящейся в контроллере
+					// которая в свою очередь запускает отведенное ей представление
+					self.showHeader(self.TodoCollection);
+					self.showMain(self.TodoCollection);
+					self.showFooter(self.TodoCollection);
+				}, 1000);
 			});
+		},
+
+		showLoading: function(TodoCollection){
+			// создфли экземпляр представления хедера и передали ему коллекцию
+			var loading = new Backbone.Marionette.ItemView({
+				className: 'please-waite',
+				template: '#loading-circle',
+			});
+			// Вставляем наш экземпляр представления header в регион под названием header
+			App.root.showChildView('header', loading);
 		},
 
 		showHeader: function(TodoCollection){

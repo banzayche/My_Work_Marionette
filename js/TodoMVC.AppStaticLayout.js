@@ -34,7 +34,6 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		},
 		// єлементі управления
 		ui: {
-			input : '#add-new-todo',
 			sort1 : '.firs-sort',
 			sort2 : '.second-sort',
 			sort3 : '.third-sort',
@@ -43,7 +42,6 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 
 		// события для ui
 		events: {
-			'keypress @ui.input' : 'addNewTodo',
 			'click @ui.sort1' : 'sortBegin',
 			'click @ui.sort2' : 'sortBegin',
 			'click @ui.sort3' : 'sortBegin',
@@ -56,8 +54,13 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 		},
 		// коррекция отображения главного поля ввода
 		hideInput: function(){
+			// создали переменную для input template
 			var inputTemplate,
+				// взяли родительскую коллекцию 
+				collection = this.collection,
+				// смотрим состояние спец атрибута
 				inputCondition = MyApp.request('filterState').get('generalInput');
+
 			// проверяем какое значение имеет атрибут спец модели,
 			// и в зависимости от этого изменяем шаблон представления
 			if (inputCondition === true) {
@@ -65,34 +68,44 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			} else{
 				inputTemplate = '#input-area-empty-layout';
 			}
+
 			// создаем вью для отображении в регионе
-			var inputView = new Backbone.Marionette.ItemView({
+			var inputView = Backbone.Marionette.ItemView.extend({
 				template: inputTemplate,
+				collection: collection,
+				ui: {
+					input : '#add-new-todo',
+				},
+				events: {
+					'keypress @ui.input' : 'addNewTodo',
+				},
+				
+				// добавление новой модели
+				addNewTodo: function(e){
+					// создаем переменную со значением кей-кода энтера
+					var Enter_key = 13,
+					// запоминаем в переменную значение нашего инпута
+					todoTitle = this.ui.input.val().trim();
+
+					// теперь ставим условие, если две вышепредставленные переменные имеют какие то значение значит создаем модель
+					if(e.which === Enter_key && todoTitle){
+						this.collection.create({
+							title: todoTitle
+						});
+						// очищаем поле ввода
+						this.ui.input.val('');
+					}
+				},
 			});
+
+			var newInputView = new inputView();
 			// показываем регион
-			this.getRegion('inputarea').show(inputView);			
+			this.getRegion('inputarea').show(newInputView);			
 		},
 
 		changeButtonClass: function(e){
 			this.ui.goRoute.removeClass('active');
 			$(e.target).addClass('active');
-		},
-
-		// добавление новой модели
-		addNewTodo: function(e){
-			// создаем переменную со значением кей-кода энтера
-			var Enter_key = 13,
-			// запоминаем в переменную значение нашего инпута
-			todoTitle = this.ui.input.val().trim();
-
-			// теперь ставим условие, если две вышепредставленные переменные имеют какие то значение значит создаем модель
-			if(e.which === Enter_key && todoTitle){
-				this.collection.create({
-					title: todoTitle
-				});
-				// очищаем поле ввода
-				this.ui.input.val('');
-			}
 		},
 
 		// тепер будет нижеприведенная конструкция будет отдавать вьюхе модель с необходимыми атрибутами
